@@ -1,0 +1,62 @@
+@host = http://localhost:3000
+
+### Register new customer
+POST {{host}}/register
+Content-Type: application/json
+
+{
+  "username": "foo@bar.baz",
+  "password": "foobar"
+}
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "foo@bar.baz",
+  "password": "foobar"
+}
+
+### Create a task
+@token = {{login.response.body.token}}
+POST {{host}}/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "New Task"
+}
+
+### Get all tasks
+GET {{host}}/tasks
+Authorization: Bearer {{token}}
+
+### Delete specific owned task
+DELETE {{host}}/tasks/4
+Authorization: Bearer {{token}}
+
+### Delete specific unowned task
+DELETE {{host}}/tasks/1
+Authorization: Bearer {{token}}
+
+### Update owned task
+PUT {{host}}/tasks/5
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "New Task",
+  "done": true
+}
+
+### Update unowned task
+PUT {{host}}/tasks/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "New Task",
+  "done": true
+}
