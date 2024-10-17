@@ -9,7 +9,7 @@ table Task {
   id    Int [pk, increment]
   name  String
   done  Boolean [default: false]
-  owner User
+  owner User @relation(fields: [ownerId], references: [id])
 }
 
 Ref: User.tasks < Task.owner
